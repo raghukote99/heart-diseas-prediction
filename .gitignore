@@ -1,0 +1,17 @@
+.venv/
+.git/
+.pytest_cache/
+.vscode/
+.idea/
+__pycache__/
+*.pyc
+
+data/
+.npm-cache/
+*.db
+server.out.log
+server.err.log
+tunnel.out.log
+tunnel.err.log
+
+.DS_Store

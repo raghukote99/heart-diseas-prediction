@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book Appointment - AK Health</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --primary-red: #d63031;
+            --light-gray: #f5f7fa;
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fb 0%, #ffeaea 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            color: var(--primary-blue) !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: #333 !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-blue) !important;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-red) 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-weight: 700;
+        }
+
+        .booking-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .row g-4 {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .doctor-card-detail {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .doctor-image-detail {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 5px solid var(--light-gray);
+            background: var(--light-gray);
+        }
+
+        .doctor-name-detail {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .doctor-spec-detail {
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .booking-form {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--primary-blue);
+            padding-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-control {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .time-slot {
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .time-slot:hover {
+            border-color: var(--primary-blue);
+            background: var(--light-gray);
+        }
+
+        .time-slot.active {
+            background: var(--primary-blue);
+            color: white;
+            border-color: var(--primary-blue);
+        }
+
+        .fee-info {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .fee-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .fee-total {
+            border-top: 2px solid var(--border-color);
+            padding-top: 0.75rem;
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        .btn-book-submit {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #1e40af 100%);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-book-submit:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-back {
+            background: white;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .alert {
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .notes-area {
+            width: 100%;
+            min-height: 100px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+        }
+
+        .notes-area:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
+        }
+
+        @media (max-width: 768px) {
+            .booking-container {
+                padding: 0 1rem;
+            }
+
+            .doctor-card-detail,
+            .booking-form {
+                padding: 1.5rem;
+            }
+
+            .time-slots {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="/">🏥 AK Health</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/predict_form">Predict</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/doctors">Doctors</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/my_appointments">Appointments</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/account">Account</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Book Appointment</h1>
+            <p>Schedule your consultation with a healthcare professional</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container booking-container" style="margin-bottom: 3rem;">
+        <a href="/doctors" class="btn-back">← Back to Doctors</a>
+
+        <!-- Toast container for flashed messages -->
+        <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 1080;">
+            <div id="toastContainer">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="toast align-items-center text-bg-{{ 'danger' if category == 'danger' else 'warning' if category == 'warning' else 'success' }} border-0 mb-2" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="d-flex">
+                                    <div class="toast-body">{{ message }}</div>
+                                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Doctor Info Column -->
+            <div class="col-lg-5">
+                <div class="doctor-card-detail">
+                    <div class="doctor-name-detail">{{ doctor_name }}</div>
+                    <div class="doctor-spec-detail">General Consultation</div>
+                    <hr>
+                    <div style="text-align: left; margin-top: 1rem;">
+                        <div class="fee-info">
+                            <div class="fee-row">
+                                <span>Consultation Fee:</span>
+                                <strong>₹{{ consultation_fee }}</strong>
+                            </div>
+                            <div class="fee-row">
+                                <span>GST (18%):</span>
+                                <strong>₹{{ (consultation_fee * 0.18) | int }}</strong>
+                            </div>
+                            <div class="fee-total">
+                                Total: ₹{{ (consultation_fee * 1.18) | int }}
+                            </div>
+                        </div>
+                        <div style="background: var(--light-gray); padding: 1rem; border-radius: 8px;">
+                            <p style="margin: 0; font-size: 0.9rem; color: #666;">
+                                ✓ Instant confirmation<br>
+                                ✓ Online consultation link will be shared<br>
+                                ✓ Appointment reminders via email<br>
+                                ✓ 24-hour cancellation policy
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Form Column -->
+            <div class="col-lg-7">
+                <form method="POST" class="booking-form" id="bookingForm">
+                    <h2 class="form-title">Select Date & Time</h2>
+
+                    <!-- Date Selection -->
+                    <div class="form-group">
+                        <label class="form-label" for="appointment_date">Appointment Date</label>
+                        <input type="date" id="appointment_date" name="appointment_date" class="form-control" required min="{{ today }}">
+                        <small style="color: #666;">Select a date within next 30 days</small>
+                    </div>
+
+                    <!-- Time Selection -->
+                    <div class="form-group">
+                        <label class="form-label">Preferred Time</label>
+                        <div class="time-slots" id="timeSlots">
+                            <input type="hidden" id="appointment_time" name="appointment_time" required>
+                        </div>
+                        <small style="color: #666;">Select an available time slot</small>
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="form-group">
+                        <label class="form-label" for="notes">Consultation Notes (Optional)</label>
+                        <textarea id="notes" name="notes" class="notes-area" placeholder="Describe your symptoms or health concerns..."></textarea>
+                        <small style="color: #666;">Help the doctor prepare for your consultation</small>
+                    </div>
+
+                    <!-- Terms -->
+                    <div style="background: #fff3cd; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-size: 0.9rem;">
+                        <strong>📋 Important:</strong> By booking, you agree to our consultation terms. This is for informational purposes only and not a substitute for in-person medical examination.
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="btn-book-submit" id="confirmBtn">
+                        Confirm Booking & Pay ₹{{ (consultation_fee * 1.18) | int }}
+                    </button>
+
+                    <div style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                        <p>🔒 Secure payment processing</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background: #2c3e50; color: white; padding: 2rem; text-align: center;">
+        <p>&copy; 2025 AK Health Consultation. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        // Dynamic time slot handling: fetch availability for selected date
+        const slotsContainer = document.getElementById('timeSlots');
+        const timeInput = document.getElementById('appointment_time');
+        const dateInput = document.getElementById('appointment_date');
+        const today = new Date().toISOString().split('T')[0];
+        document.querySelector('[min]').setAttribute('min', today);
+
+        async function fetchSlotsForDate(dateStr) {
+            slotsContainer.innerHTML = '<div style="padding:1rem;color:#666;">Loading slots...</div>';
+            try {
+                const resp = await fetch(`/api/doctor_availability/{{ doctor_id }}?date=${encodeURIComponent(dateStr)}`);
+                const data = await resp.json();
+                renderSlots(data.slots || [], data.booked_slots || []);
+            } catch (err) {
+                console.error('Failed to fetch slots', err);
+                slotsContainer.innerHTML = '<div style="padding:1rem;color:#d9534f;">Unable to load slots</div>';
+            }
+        }
+
+        function renderSlots(availableSlots, bookedSlots) {
+            slotsContainer.innerHTML = '';
+            const all = Array.from(new Set((availableSlots || []).concat(bookedSlots || [])));
+            // If API returns only available slots, use those; otherwise show base ordering
+            const ordering = [
+                '10:00 AM','10:30 AM','11:00 AM','11:30 AM','12:00 PM','2:00 PM','2:30 PM','3:00 PM','3:30 PM','4:00 PM','4:30 PM','5:00 PM'
+            ];
+            ordering.forEach(time => {
+                const isAvailable = (availableSlots || []).includes(time);
+                const slot = document.createElement('button');
+                slot.type = 'button';
+                slot.className = 'time-slot' + (isAvailable ? '' : ' disabled');
+                slot.textContent = time + (isAvailable ? '' : ' (booked)');
+                if (isAvailable) {
+                    slot.onclick = (e) => {
+                        e.preventDefault();
+                        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('active'));
+                        slot.classList.add('active');
+                        timeInput.value = time;
+                    };
+                } else {
+                    slot.onclick = (e) => { e.preventDefault(); };
+                    slot.style.opacity = '0.6';
+                    slot.style.cursor = 'not-allowed';
+                }
+                slotsContainer.appendChild(slot);
+            });
+        }
+
+        // Initialize on load with today's date
+        window.addEventListener('load', () => {
+            const dateVal = dateInput.value || today;
+            dateInput.value = dateVal;
+            fetchSlotsForDate(dateVal);
+        });
+
+        // When user changes date, fetch availability
+        dateInput.addEventListener('change', function() {
+            const val = this.value;
+            if (val) fetchSlotsForDate(val);
+        });
+
+        // Validate form before submission
+        document.querySelector('form').onsubmit = function(e) {
+            if (!timeInput.value) {
+                e.preventDefault();
+                alert('Please select a time slot');
+                return false;
+            }
+            if (!document.getElementById('appointment_date').value) {
+                e.preventDefault();
+                alert('Please select a date');
+                return false;
+            }
+        };
+    </script>
+    <script>
+        // Razorpay integration: create order server-side, open checkout, then verify and create appointment
+        async function createOrderAndPay(date, time, notes) {
+            const confirmBtn = document.getElementById('confirmBtn');
+            confirmBtn.disabled = true;
+            confirmBtn.textContent = 'Preparing payment...';
+
+            try {
+                const resp = await fetch(`/create_order/{{ doctor_id }}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ appointment_date: date, appointment_time: time, notes: notes })
+                });
+                const result = await resp.json();
+                if (!result.success) {
+                    alert(result.message || 'Unable to create payment order');
+                    confirmBtn.disabled = false;
+                    confirmBtn.textContent = 'Confirm Booking & Pay ₹{{ (consultation_fee * 1.18) | int }}';
+                    return;
+                }
+
+                const options = {
+                    key: result.key,
+                    amount: result.amount,
+                    currency: result.currency || 'INR',
+                    name: 'AK Health Consultation',
+                    description: 'Consultation fee',
+                    order_id: result.order_id,
+                    handler: async function(response) {
+                        // verify payment on server and create appointment
+                        confirmBtn.textContent = 'Verifying payment...';
+                        try {
+                            const verifyResp = await fetch(`/verify_payment/{{ doctor_id }}`, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_signature: response.razorpay_signature,
+                                    appointment_date: date,
+                                    appointment_time: time,
+                                    notes: notes
+                                })
+                            });
+                            const verifyData = await verifyResp.json();
+                            if (verifyData.success) {
+                                const toastHtml = `<div class="toast align-items-center text-bg-success border-0 mb-2" role="alert" aria-live="assertive" aria-atomic="true">`+
+                                                  `<div class="d-flex"><div class="toast-body">${verifyData.message}</div>`+
+                                                  `<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button></div></div>`;
+                                document.getElementById('toastContainer').insertAdjacentHTML('beforeend', toastHtml);
+                                const el = document.querySelector('#toastContainer .toast:last-child');
+                                const t = new bootstrap.Toast(el, { delay: 3000 });
+                                t.show();
+                                setTimeout(function() { window.location.href = '/my_appointments'; }, 1200);
+                            } else {
+                                alert(verifyData.message || 'Payment verification failed');
+                                confirmBtn.disabled = false;
+                                confirmBtn.textContent = 'Confirm Booking & Pay ₹{{ (consultation_fee * 1.18) | int }}';
+                            }
+                        } catch (err) {
+                            console.error(err);
+                            alert('Verification failed: ' + err.message);
+                            confirmBtn.disabled = false;
+                            confirmBtn.textContent = 'Confirm Booking & Pay ₹{{ (consultation_fee * 1.18) | int }}';
+                        }
+                    },
+                    prefill: {
+                        name: '{{ session.get("admin_user") or "" }}',
+                        email: '{{ session.get("user_email") or "" }}'
+                    },
+                    theme: { color: '#2563eb' }
+                };
+
+                const rzp = new Razorpay(options);
+                rzp.on('payment.failed', function (response){
+                    alert('Payment failed: ' + (response.error && response.error.description ? response.error.description : 'Unknown'));
+                    confirmBtn.disabled = false;
+                    confirmBtn.textContent = 'Confirm Booking & Pay ₹{{ (consultation_fee * 1.18) | int }}';
+                });
+                confirmBtn.textContent = 'Proceeding to payment...';
+                rzp.open();
+            } catch (err) {
+                console.error(err);
+                alert('Payment failed: ' + err.message);
+                const confirmBtn = document.getElementById('confirmBtn');
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = 'Confirm Booking & Pay ₹{{ (consultation_fee * 1.18) | int }}';
+            }
+        }
+
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const date = document.getElementById('appointment_date').value;
+            const time = document.getElementById('appointment_time').value;
+            const notes = document.getElementById('notes').value || '';
+            if (!date || !time) {
+                alert('Please select a date and time');
+                return;
+            }
+            createOrderAndPay(date, time, notes);
+        });
+    </script>
+    <script>
+        // Initialize and show bootstrap toasts for flashed messages
+        window.addEventListener('load', function() {
+            const toastEls = Array.from(document.querySelectorAll('.toast'));
+            toastEls.forEach(function(el) {
+                try {
+                    const t = new bootstrap.Toast(el, { delay: 5000 });
+                    t.show();
+                } catch (err) {
+                    console.error('Toast init error', err);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
